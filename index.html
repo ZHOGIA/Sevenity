@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Aplikasi Keren</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Soft black theme (Gray 900) */
+            color: #E5E7EB; /* Gray 200 */
+        }
+
+        /* Gradient text effect */
+        .gradient-text {
+            background-image: linear-gradient(to right, #34d399, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Scrollbar styling for a modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937; /* Gray 800 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5; /* Indigo 600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1; /* Indigo 500 */
+        }
+
+        /* Modal transition effects */
+        #appModal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #modalBackdrop {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="flex">
+        <!-- Sidebar: Developer Profile & App List -->
+        <aside class="fixed top-0 left-0 h-screen w-64 lg:w-72 bg-gray-900/50 backdrop-blur-sm border-r border-gray-700/50 p-6 flex flex-col transition-all duration-300">
+            <!-- Developer Profile Section -->
+            <div class="text-center mb-10">
+                <img src="https://placehold.co/100x100/34d399/111827?text=Dev" alt="Foto Profil" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-emerald-400 shadow-lg">
+                <h1 class="text-xl font-bold text-white">Nama Developer</h1>
+                <p class="text-sm text-gray-400">Game & App Creator</p>
+                <!-- Social Media Icons -->
+                <div class="flex justify-center space-x-4 mt-4 text-gray-400">
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fab fa-twitter fa-lg"></i></a>
+                </div>
+            </div>
+
+            <!-- App List Section -->
+            <div class="flex-grow overflow-y-auto pr-2">
+                <h2 class="text-lg font-semibold mb-4 text-white tracking-wider">Aplikasi Saya</h2>
+                <ul id="appList" class="space-y-2">
+                    <!-- App list will be dynamically inserted here by JavaScript -->
+                </ul>
+            </div>
+            
+            <footer class="text-center text-xs text-gray-500 mt-6">
+                <p>&copy; 2025 Nama Developer. All Rights Reserved.</p>
+            </footer>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="ml-64 lg:ml-72 p-8 lg:p-12 w-full min-h-screen">
+             <div class="text-center flex flex-col justify-center items-center h-full">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4">
+                    <span class="gradient-text">Selamat Datang</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-2xl">
+                    Ini adalah portofolio digital tempat saya menuangkan ide dan kreativitas menjadi aplikasi dan game yang fungsional. Silakan pilih aplikasi di sebelah kiri untuk melihat detailnya.
+                </p>
+                <div class="mt-8 text-2xl text-gray-500 animate-bounce">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Pop-up for App Details -->
+    <div id="modalBackdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-40"></div>
+    <div id="appModal" class="fixed inset-0 flex items-center justify-center p-4 hidden z-50 opacity-0 transform scale-95">
+        <div class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-gray-700">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-5 border-b border-gray-700">
+                <h3 id="modalTitle" class="text-2xl font-bold gradient-text">Nama Aplikasi</h3>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times fa-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 flex-grow overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Image -->
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2 text-white">Pratinjau</h4>
+                        <img id="modalImage" src="https://placehold.co/600x400/1f2937/e5e7eb?text=App+Preview" alt="Pratinjau Aplikasi" class="rounded-lg w-full object-cover shadow-md">
+                    </div>
+
+                    <!-- Right Column: Details -->
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2 text-white">Ringkasan</h4>
+                            <p id="modalOverview" class="text-gray-300 text-base leading-relaxed">Deskripsi singkat tentang aplikasi...</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2 text-white">Tujuan Aplikasi</h4>
+                            <p id="modalPurpose" class="text-gray-300 text-base leading-relaxed">Tujuan dibuatnya aplikasi ini...</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-lg mb-2 text-white">Kebijakan Privasi</h4>
+                            <p id="modalPrivacy" class="text-gray-300 text-base leading-relaxed">Penjelasan singkat tentang kebijakan privasi...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Data Aplikasi ---
+        // Kamu bisa menambahkan atau mengubah data aplikasi di sini.
+        const apps = [
+            {
+                id: 'game-petualangan',
+                name: 'Game Petualangan Ajaib',
+                overview: 'Sebuah game petualangan 2D dengan grafis piksel yang menawan. Jelajahi dunia magis, kalahkan monster, dan temukan harta karun tersembunyi.',
+                imageUrl: 'https://placehold.co/600x400/34d399/111827?text=Game+Ajaib',
+                purpose: 'Dibuat untuk memberikan pengalaman bermain game klasik yang menyenangkan dan menantang bagi semua umur.',
+                privacy: 'Game ini tidak mengumpulkan data pribadi apa pun dari pemain. Semua kemajuan disimpan secara lokal di perangkat Anda.'
+            },
+            {
+                id: 'aplikasi-produktif',
+                name: 'Produktivitas Pro',
+                overview: 'Aplikasi manajemen tugas yang simpel namun kuat. Atur jadwal harianmu, buat daftar tugas, dan fokus pada hal yang paling penting.',
+                imageUrl: 'https://placehold.co/600x400/60a5fa/111827?text=Produktif+Pro',
+                purpose: 'Membantu pengguna meningkatkan produktivitas dan mengelola waktu dengan lebih efektif melalui antarmuka yang bersih dan intuitif.',
+                privacy: 'Kami menghargai privasi Anda. Semua data tugas dan jadwal dienkripsi dan hanya dapat diakses oleh Anda.'
+            },
+            {
+                id: 'editor-foto',
+                name: 'Editor Foto AI',
+                overview: 'Ubah fotomu menjadi karya seni dengan bantuan AI. Terapkan filter unik, tingkatkan kualitas gambar, dan hapus objek yang tidak diinginkan dengan mudah.',
+                imageUrl: 'https://placehold.co/600x400/c084fc/111827?text=Foto+AI',
+                purpose: 'Memberikan alat editing foto yang canggih dan mudah digunakan bagi fotografer pemula maupun profesional.',
+                privacy: 'Foto yang Anda unggah diproses di perangkat Anda atau di server kami dan akan dihapus secara otomatis setelah 24 jam.'
+            }
+        ];
+
+        // --- Elemen DOM ---
+        const appListContainer = document.getElementById('appList');
+        const modal = document.getElementById('appModal');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        
+        // --- Fungsi untuk menampilkan aplikasi di sidebar ---
+        function displayApps() {
+            appListContainer.innerHTML = ''; // Kosongkan daftar
+            apps.forEach(app => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" data-id="${app.id}" class="app-link flex items-center p-3 text-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 group">
+                        <i class="fas fa-layer-group w-5 h-5 mr-3 text-gray-400 group-hover:text-white"></i>
+                        <span class="font-medium">${app.name}</span>
+                    </a>
+                `;
+                appListContainer.appendChild(li);
+            });
+        }
+
+        // --- Fungsi untuk membuka dan mengisi modal ---
+        function openModal(appId) {
+            const appData = apps.find(app => app.id === appId);
+            if (!appData) return;
+
+            // Isi data ke dalam elemen modal
+            document.getElementById('modalTitle').textContent = appData.name;
+            document.getElementById('modalImage').src = appData.imageUrl;
+            document.getElementById('modalImage').alt = `Pratinjau ${appData.name}`;
+            document.getElementById('modalOverview').textContent = appData.overview;
+            document.getElementById('modalPurpose').textContent = appData.purpose;
+            document.getElementById('modalPrivacy').textContent = appData.privacy;
+
+            // Tampilkan modal dengan animasi
+            modalBackdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalBackdrop.classList.add('opacity-100');
+                modal.classList.remove('opacity-0', 'scale-95');
+                modal.classList.add('opacity-100', 'scale-100');
+            }, 10); // small delay for transition to trigger
+        }
+
+        // --- Fungsi untuk menutup modal ---
+        function closeModal() {
+            modalBackdrop.classList.remove('opacity-100');
+            modal.classList.remove('opacity-100', 'scale-100');
+            modal.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                modalBackdrop.classList.add('hidden');
+                modal.classList.add('hidden');
+            }, 300); // match transition duration
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', displayApps);
+
+        // Event listener untuk klik pada daftar aplikasi
+        appListContainer.addEventListener('click', (e) => {
+            e.preventDefault();
+            const link = e.target.closest('.app-link');
+            if (link) {
+                const appId = link.dataset.id;
+                openModal(appId);
+            }
+        });
+
+        // Event listener untuk tombol close dan backdrop
+        closeModalBtn.addEventListener('click', closeModal);
+        modalBackdrop.addEventListener('click', closeModal);
+        
+        // Menutup modal dengan tombol Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+    </script>
+</body>
+</html>
