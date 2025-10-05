@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Aplikasi Keren</title>
+    <title>Sevenity - Portfolio Aplikasi</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Poppins for a softer feel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         /* Custom Styles */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #111827; /* Soft black theme (Gray 900) */
             color: #E5E7EB; /* Gray 200 */
         }
 
         /* Gradient text effect */
         .gradient-text {
-            background-image: linear-gradient(to right, #34d399, #60a5fa, #c084fc);
+            background-image: linear-gradient(to right, #5eead4, #7dd3fc, #d8b4fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+        
+        /* Active nav link style */
+        .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        
+        /* Animate sections on scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-        /* Scrollbar styling for a modern look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1f2937; /* Gray 800 */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4f46e5; /* Indigo 600 */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1; /* Indigo 500 */
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Modal transition effects */
@@ -51,206 +54,218 @@
         #modalBackdrop {
             transition: opacity 0.3s ease;
         }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <div class="flex">
-        <!-- Sidebar: Developer Profile & App List -->
-        <aside class="fixed top-0 left-0 h-screen w-64 lg:w-72 bg-gray-900/50 backdrop-blur-sm border-r border-gray-700/50 p-6 flex flex-col transition-all duration-300">
-            <!-- Developer Profile Section -->
-            <div class="text-center mb-10">
-                <img src="https://raw.githubusercontent.com/ZHOGIA/Sevenity/bd29e3ff6b20eb21ce228a4d9f1d9e2f95ae0775/image/Logo%20Sevenity.png" alt="Foto Profil" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-emerald-400 shadow-lg">
-                <h1 class="text-xl font-bold text-white">Sevenity</h1>
-                <p class="text-sm text-gray-400">Game & App Creator</p>
-                <!-- Social Media Icons -->
-                <div class="flex justify-center space-x-4 mt-4 text-gray-400">
-                    <a href="https://github.com/ZHOGIA" class="hover:text-emerald-400 transition-colors"><i class="fab fa-github fa-lg"></i></a>
-                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fab fa-linkedin fa-lg"></i></a>
-                    <a href="#" class="hover:text-emerald-400 transition-colors"><i class="fab fa-twitter fa-lg"></i></a>
-                </div>
+    <!-- Sidebar (Collapsible) -->
+    <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen bg-gray-900/70 backdrop-blur-lg border-r border-gray-700/50 p-6 flex-col transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+        <!-- Profile Section -->
+        <div class="text-center mb-8">
+             <a href="#beranda" class="nav-link-logo">
+                <img src="https://raw.githubusercontent.com/ZHOGIA/Sevenity/0ed35dc9ddff5638890db60cf5596f7e0c5421d2/image/Logo%20Sevenity.png" alt="Logo Profil" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-teal-300 shadow-lg hover:scale-105 transition-transform">
+            </a>
+            <div class="flex justify-center space-x-5 mt-4 text-gray-400">
+                <a href="https://github.com/ZHOGIA" class="hover:text-teal-300 transition-colors text-2xl"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/zhogia" class="hover:text-teal-300 transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
             </div>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex-grow">
+            <ul class="space-y-3">
+                <li><a href="#beranda" class="nav-link active flex items-center p-3 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 group"><i class="fas fa-home w-6 mr-3 text-gray-400 group-hover:text-white"></i> Beranda</a></li>
+                <li><a href="#tentang" class="nav-link flex items-center p-3 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 group"><i class="fas fa-user w-6 mr-3 text-gray-400 group-hover:text-white"></i> Tentang</a></li>
+                <li><a href="#aplikasi" class="nav-link flex items-center p-3 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 group"><i class="fas fa-layer-group w-6 mr-3 text-gray-400 group-hover:text-white"></i> Aplikasi</a></li>
+            </ul>
+        </nav>
+        <footer class="text-center text-xs text-gray-500 mt-auto absolute bottom-6 left-0 right-0">
+            <p>&copy; 2025 Sevenity.</p>
+        </footer>
+    </aside>
 
-            <!-- App List Section -->
-            <div class="flex-grow overflow-y-auto pr-2">
-                <h2 class="text-lg font-semibold mb-4 text-white tracking-wider">Aplikasi Saya</h2>
-                <ul id="appList" class="space-y-2">
-                    <!-- App list will be dynamically inserted here by JavaScript -->
-                </ul>
-            </div>
-            
-            <footer class="text-center text-xs text-gray-500 mt-6">
-                <p>&copy; 2025 Sevenity. All Rights Reserved.</p>
-            </footer>
-        </aside>
+    <!-- Mobile Menu Button -->
+    <button id="menu-toggle" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-800 rounded-md text-white">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Backdrop for mobile sidebar -->
+    <div id="sidebar-backdrop" class="lg:hidden fixed inset-0 bg-black/50 z-30 hidden"></div>
 
-        <!-- Main Content Area -->
-        <main class="ml-64 lg:ml-72 p-8 lg:p-12 w-full min-h-screen">
-             <div class="text-center flex flex-col justify-center items-center h-full">
-                <h1 class="text-5xl md:text-6xl font-extrabold mb-4">
-                    <span class="gradient-text">Selamat Datang</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-300 max-w-2xl">
-                    Ini adalah portofolio digital tempat saya menuangkan ide dan kreativitas menjadi aplikasi dan game yang fungsional. Silakan pilih aplikasi di sebelah kiri untuk melihat detailnya.
-                </p>
-                <div class="mt-8 text-2xl text-gray-500 animate-bounce">
-                    <i class="fas fa-arrow-left"></i>
-                </div>
-            </div>
-        </main>
-    </div>
+    <!-- Main Content -->
+    <main id="main-content" class="lg:ml-64 transition-all duration-300 ease-in-out">
+        <!-- Beranda Section -->
+        <section id="beranda" class="min-h-screen flex flex-col justify-center items-center text-center p-8 fade-in-section">
+            <h1 class="text-6xl md:text-8xl font-bold mb-4">
+                <span class="gradient-text">Sevenity</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl">
+                Kesederhanaan dalam Setiap Baris Kode.
+            </p>
+        </section>
 
+        <!-- Tentang Section -->
+        <section id="tentang" class="min-h-screen flex flex-col justify-center items-center text-center p-8 fade-in-section">
+             <h2 class="text-4xl md:text-5xl font-bold mb-8 gradient-text">Tentang Saya</h2>
+             <img src="https://raw.githubusercontent.com/ZHOGIA/Sevenity/0ed35dc9ddff5638890db60cf5596f7e0c5421d2/image/Logo%20Sevenity.png" alt="Foto Profil" class="w-36 h-36 rounded-full mb-6 border-2 border-sky-300 shadow-2xl">
+             <h3 class="text-2xl font-semibold text-white">Sevenity</h3>
+             <p class="text-md text-gray-400 mb-6">Game & App Creator</p>
+             <p class="max-w-3xl text-gray-300 leading-relaxed">
+                Saya adalah seorang developer yang bersemangat dalam menciptakan aplikasi dan game yang tidak hanya fungsional tetapi juga memberikan pengalaman pengguna yang menyenangkan. Dengan fokus pada desain yang bersih dan kode yang efisien, saya mengubah ide-ide kreatif menjadi solusi digital yang nyata. Selamat datang di portofolio saya!
+            </p>
+        </section>
+
+        <!-- Aplikasi Section -->
+        <section id="aplikasi" class="min-h-screen flex flex-col justify-center p-8 lg:p-12 fade-in-section">
+             <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center gradient-text">Kumpulan Aplikasi</h2>
+             <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- App cards will be dynamically inserted here -->
+             </div>
+        </section>
+    </main>
+    
     <!-- Modal Pop-up for App Details -->
-    <div id="modalBackdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-40"></div>
+    <div id="modalBackdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-40 opacity-0"></div>
     <div id="appModal" class="fixed inset-0 flex items-center justify-center p-4 hidden z-50 opacity-0 transform scale-95">
         <div class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-gray-700">
-            <!-- Modal Header -->
             <div class="flex justify-between items-center p-5 border-b border-gray-700">
                 <h3 id="modalTitle" class="text-2xl font-bold gradient-text">Nama Aplikasi</h3>
-                <button id="closeModalBtn" class="text-gray-400 hover:text-white transition-colors">
-                    <i class="fas fa-times fa-xl"></i>
-                </button>
+                <button id="closeModalBtn" class="text-gray-400 hover:text-white transition-colors"><i class="fas fa-times fa-xl"></i></button>
             </div>
-
-            <!-- Modal Body -->
             <div class="p-6 flex-grow overflow-y-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Image -->
                     <div>
                         <h4 class="font-semibold text-lg mb-2 text-white">Pratinjau</h4>
                         <img id="modalImage" src="https://placehold.co/600x400/1f2937/e5e7eb?text=App+Preview" alt="Pratinjau Aplikasi" class="rounded-lg w-full object-cover shadow-md">
                     </div>
-
-                    <!-- Right Column: Details -->
                     <div class="space-y-6">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2 text-white">Ringkasan</h4>
-                            <p id="modalOverview" class="text-gray-300 text-base leading-relaxed">Deskripsi singkat tentang aplikasi...</p>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2 text-white">Tujuan Aplikasi</h4>
-                            <p id="modalPurpose" class="text-gray-300 text-base leading-relaxed">Tujuan dibuatnya aplikasi ini...</p>
-                        </div>
-                         <div>
-                            <h4 class="font-semibold text-lg mb-2 text-white">Kebijakan Privasi</h4>
-                            <p id="modalPrivacy" class="text-gray-300 text-base leading-relaxed">Penjelasan singkat tentang kebijakan privasi...</p>
-                        </div>
+                        <div><h4 class="font-semibold text-lg mb-2 text-white">Ringkasan</h4><p id="modalOverview" class="text-gray-300 text-base leading-relaxed"></p></div>
+                        <div><h4 class="font-semibold text-lg mb-2 text-white">Tujuan Aplikasi</h4><p id="modalPurpose" class="text-gray-300 text-base leading-relaxed"></p></div>
+                        <div><h4 class="font-semibold text-lg mb-2 text-white">Kebijakan Privasi</h4><p id="modalPrivacy" class="text-gray-300 text-base leading-relaxed"></p></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
     <script>
-        // --- Data Aplikasi ---
-        // Kamu bisa menambahkan atau mengubah data aplikasi di sini.
-        const apps = [
-            // {
-            //     id: 'game-petualangan',
-            //     name: 'TimeMark: Mark Your Moment.',
-            //     overview: 'Sebuah game petualangan 2D dengan grafis piksel yang menawan. Jelajahi dunia magis, kalahkan monster, dan temukan harta karun tersembunyi.',
-            //     imageUrl: 'https://placehold.co/600x400/34d399/111827?text=Game+Ajaib',
-            //     purpose: 'Dibuat untuk memberikan pengalaman bermain game klasik yang menyenangkan dan menantang bagi semua umur.',
-            //     privacy: 'Game ini tidak mengumpulkan data pribadi apa pun dari pemain. Semua kemajuan disimpan secara lokal di perangkat Anda.'
-            // },
-            {
-                id: 'aplikasi-produktif',
-                name: 'TimeMark: Mark Your Moment.',
-                overview: 'Aplikasi manajemen tugas yang simpel namun kuat. Atur jadwal harianmu, buat daftar tugas, dan fokus pada hal yang paling penting.',
-                imageUrl: 'https://placehold.co/600x400/60a5fa/111827?text=Produktif+Pro',
-                purpose: 'Membantu pengguna meningkatkan produktivitas dan mengelola waktu dengan lebih efektif melalui antarmuka yang bersih dan intuitif.',
-                privacy: 'Kami menghargai privasi Anda. Semua data tugas dan jadwal dienkripsi dan hanya dapat diakses oleh Anda.'
-            },
-            // {
-            //     id: 'editor-foto',
-            //     name: 'Editor Foto AI',
-            //     overview: 'Ubah fotomu menjadi karya seni dengan bantuan AI. Terapkan filter unik, tingkatkan kualitas gambar, dan hapus objek yang tidak diinginkan dengan mudah.',
-            //     imageUrl: 'https://placehold.co/600x400/c084fc/111827?text=Foto+AI',
-            //     purpose: 'Memberikan alat editing foto yang canggih dan mudah digunakan bagi fotografer pemula maupun profesional.',
-            //     privacy: 'Foto yang Anda unggah diproses di perangkat Anda atau di server kami dan akan dihapus secara otomatis setelah 24 jam.'
-            // }
-        ];
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Data Aplikasi ---
+            const apps = [
+                { id: 'game-petualangan', name: 'Game Petualangan Ajaib', overview: 'Sebuah game petualangan 2D dengan grafis piksel yang menawan. Jelajahi dunia magis, kalahkan monster, dan temukan harta karun tersembunyi.', imageUrl: 'https://placehold.co/600x400/5eead4/111827?text=Game+Ajaib', purpose: 'Dibuat untuk memberikan pengalaman bermain game klasik yang menyenangkan dan menantang bagi semua umur.', privacy: 'Game ini tidak mengumpulkan data pribadi apa pun dari pemain. Semua kemajuan disimpan secara lokal di perangkat Anda.' },
+                { 
+                  id: 'aplikasi-produktif', 
+                  name: 'TimeMark: Mark Your Moment.', 
+                  overview: 'Jangan biarkan momen spesial lewat begitu aja. Dengan TimeMark, catat, ingat, dan hitung mundur semua tanggal penting dalam hidupmu. Simpel dan gampang dipakai!', 
+                  imageUrl: 'https://raw.githubusercontent.com/ZHOGIA/Sevenity/0ed35dc9ddff5638890db60cf5596f7e0c5421d2/image/TimeMark.png', 
+                  purpose: 'Tujuan utama TimeMark adalah membantumu menghargai setiap momen. Aplikasi ini dirancang untuk:<br><br>• <strong>Membantu Mengingat:</strong> Menjadi \"brankas\" digital untuk semua tanggal pentingmu.<br>• <strong>Membangun Antusiasme:</strong> Memberi semangat untuk menantikan hari spesial dengan fitur hitung mundur.<br>• <strong>Menyediakan Platform Simpel:</strong> Fokus pada fungsi utama tanpa fitur rumit, sehingga mudah digunakan.', 
+                  privacy: 'Privasi kamu itu penting banget buat kami di TimeMark. Kami janji akan selalu transparan tentang data apa yang kami gunakan. Data yang kamu masukkan adalah milikmu dan kami tidak mengambil data pribadi. <br><br>Untuk penjelasan yang lebih detail, silakan kunjungi halaman Kebijakan Privasi kami dengan menekan tombol di bawah ini. <br><br><a href=\"https://zhogia.github.io/sevenityPrivacy/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"inline-block mt-2 bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors\">Kunjungi Kebijakan Privasi</a>' 
+                },
+                { id: 'editor-foto', name: 'Editor Foto AI', overview: 'Ubah fotomu menjadi karya seni dengan bantuan AI. Terapkan filter unik, tingkatkan kualitas gambar, dan hapus objek yang tidak diinginkan dengan mudah.', imageUrl: 'https://placehold.co/600x400/d8b4fe/111827?text=Foto+AI', purpose: 'Memberikan alat editing foto yang canggih dan mudah digunakan bagi fotografer pemula maupun profesional.', privacy: 'Foto yang Anda unggah diproses di perangkat Anda atau di server kami dan akan dihapus secara otomatis setelah 24 jam.' }
+            ];
 
-        // --- Elemen DOM ---
-        const appListContainer = document.getElementById('appList');
-        const modal = document.getElementById('appModal');
-        const modalBackdrop = document.getElementById('modalBackdrop');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        
-        // --- Fungsi untuk menampilkan aplikasi di sidebar ---
-        function displayApps() {
-            appListContainer.innerHTML = ''; // Kosongkan daftar
-            apps.forEach(app => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <a href="#" data-id="${app.id}" class="app-link flex items-center p-3 text-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition-all duration-200 group">
-                        <i class="fas fa-layer-group w-5 h-5 mr-3 text-gray-400 group-hover:text-white"></i>
-                        <span class="font-medium">${app.name}</span>
-                    </a>
-                `;
-                appListContainer.appendChild(li);
+            // --- Elemen DOM ---
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const appGrid = document.getElementById('app-grid');
+            const modal = document.getElementById('appModal');
+            const modalBackdrop = document.getElementById('modalBackdrop');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const mainContent = document.getElementById('main-content');
+            
+            // --- Sidebar Toggle Logic ---
+            function toggleSidebar() {
+                sidebar.classList.toggle('-translate-x-full');
+                sidebarBackdrop.classList.toggle('hidden');
+            }
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarBackdrop.addEventListener('click', toggleSidebar);
+
+            // --- Populate App Grid ---
+            function displayApps() {
+                appGrid.innerHTML = '';
+                apps.forEach(app => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 cursor-pointer';
+                    card.dataset.id = app.id;
+                    card.innerHTML = `
+                        <img src="${app.imageUrl.replace('600x400', '500x300')}" alt="${app.name}" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold text-white">${app.name}</h3>
+                            <p class="text-gray-400 mt-2 text-sm">${app.overview.substring(0, 70)}...</p>
+                        </div>
+                    `;
+                    card.addEventListener('click', () => openModal(app.id));
+                    appGrid.appendChild(card);
+                });
+            }
+
+            // --- Modal Logic ---
+            function openModal(appId) {
+                const appData = apps.find(app => app.id === appId);
+                if (!appData) return;
+
+                document.getElementById('modalTitle').textContent = appData.name;
+                document.getElementById('modalImage').src = appData.imageUrl;
+                // Menggunakan innerHTML agar tag HTML seperti <br> dan <strong> bisa terbaca
+                document.getElementById('modalOverview').innerHTML = appData.overview;
+                document.getElementById('modalPurpose').innerHTML = appData.purpose;
+                document.getElementById('modalPrivacy').innerHTML = appData.privacy;
+
+                modalBackdrop.classList.remove('hidden');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalBackdrop.classList.add('opacity-100');
+                    modal.classList.remove('opacity-0', 'scale-95');
+                }, 10);
+            }
+
+            function closeModal() {
+                modalBackdrop.classList.remove('opacity-100');
+                modal.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    modalBackdrop.classList.add('hidden');
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+            document.addEventListener('keydown', (e) => e.key === 'Escape' && !modal.classList.contains('hidden') && closeModal());
+
+            // --- Scroll & Navigation Logic ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -30% 0px' });
+            sections.forEach(section => observer.observe(section));
+
+            // Close sidebar on nav link click for mobile
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) {
+                       toggleSidebar();
+                    }
+                });
             });
-        }
 
-        // --- Fungsi untuk membuka dan mengisi modal ---
-        function openModal(appId) {
-            const appData = apps.find(app => app.id === appId);
-            if (!appData) return;
-
-            // Isi data ke dalam elemen modal
-            document.getElementById('modalTitle').textContent = appData.name;
-            document.getElementById('modalImage').src = appData.imageUrl;
-            document.getElementById('modalImage').alt = `Pratinjau ${appData.name}`;
-            document.getElementById('modalOverview').textContent = appData.overview;
-            document.getElementById('modalPurpose').textContent = appData.purpose;
-            document.getElementById('modalPrivacy').textContent = appData.privacy;
-
-            // Tampilkan modal dengan animasi
-            modalBackdrop.classList.remove('hidden');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modalBackdrop.classList.add('opacity-100');
-                modal.classList.remove('opacity-0', 'scale-95');
-                modal.classList.add('opacity-100', 'scale-100');
-            }, 10); // small delay for transition to trigger
-        }
-
-        // --- Fungsi untuk menutup modal ---
-        function closeModal() {
-            modalBackdrop.classList.remove('opacity-100');
-            modal.classList.remove('opacity-100', 'scale-100');
-            modal.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => {
-                modalBackdrop.classList.add('hidden');
-                modal.classList.add('hidden');
-            }, 300); // match transition duration
-        }
-
-        // --- Event Listeners ---
-        document.addEventListener('DOMContentLoaded', displayApps);
-
-        // Event listener untuk klik pada daftar aplikasi
-        appListContainer.addEventListener('click', (e) => {
-            e.preventDefault();
-            const link = e.target.closest('.app-link');
-            if (link) {
-                const appId = link.dataset.id;
-                openModal(appId);
-            }
+            // --- Initial Calls ---
+            displayApps();
         });
-
-        // Event listener untuk tombol close dan backdrop
-        closeModalBtn.addEventListener('click', closeModal);
-        modalBackdrop.addEventListener('click', closeModal);
-        
-        // Menutup modal dengan tombol Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                closeModal();
-            }
-        });
-
     </script>
 </body>
 </html>
